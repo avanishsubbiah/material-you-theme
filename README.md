@@ -45,6 +45,21 @@ You also need to install the [User Themes](https://extensions.gnome.org/extensio
 
 If User Themes is installed through gnome extension store you will get a warning that the MaterialYou shell theme could not be applied automatically. In this case use Gnome Tweaks or User Themes to manually apply the MaterialYou shell theme.
 
+### Pywal Theming
+To enable Pywal theming pip3 must be installed, then click the install Pywal button in extension preferences and toggle Pywal theming on. 
+
+If you are new to Pywal, check out the Pywal [wiki](https://github.com/dylanaraps/pywal/wiki). There are lots of things that Pywal integrates with such as [Vim](https://github.com/dylanaraps/wal.vim), [Neovim](https://github.com/AlphaTechnolog/pywal.nvim), [VSCode](https://github.com/dlasagno/vscode-wal-theme), [Zathura](https://github.com/GideonWolfe/Zathura-Pywal), and many more.
+
+Out of the box, Pywal will only temporarily change the colors of your terminal. As a first step you should include something like 
+
+```
+if [[ -f "$HOME/.cache/wal/sequences" ]]; then
+    (cat $HOME/.cache/wal/sequences)
+fi
+```
+in your `~/.bashrc` or `~/.zshrc`
+
+
 ### Libadwaita
 #### Native
 Theming for native libadwaita will work by default.
