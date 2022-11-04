@@ -152,6 +152,7 @@ function apply_theme(base_presets, color_mappings, notify=false) {
     let css = "";
     for (const key in base_preset.variables) {
         css += "@define-color " + key + " " + base_preset.variables[key] + ";\n"
+        if (key === "window_bg_color") run_pywal(base_preset.variables[key], wall_path)
     }
     for (const prefix_key in base_preset.palette) {
         for (const key_2 in base_preset.palette[prefix_key]) {
@@ -165,7 +166,7 @@ function apply_theme(base_presets, color_mappings, notify=false) {
     write_str(css, config_path + "/gtk-4.0/gtk.css");
     write_str(css, config_path + "/gtk-3.0/gtk.css");
 
-    if (ext_utils.check_npm()) {
+    if (ext_utils.check_bin('/usr/bin/sassc')) {
         const version = Config.PACKAGE_VERSION.substring(0, 2);
 
         modify_colors(
@@ -388,4 +389,16 @@ function map_colors(color_mapping, base_preset, scheme) {
         }
     }
     return base_preset;
+}
+
+function run_pywal(background, image) {
+    if(!ext_utils.check_bin('/usr/bin/wal')) return
+    try {
+        Gio.Subprocess.new(
+            ['/usr/bin/wal', '-b', background, '-i', image],
+            Gio.SubprocessFlags.NONE
+        );
+    } catch (e) {
+        logError(e);
+    }
 }
